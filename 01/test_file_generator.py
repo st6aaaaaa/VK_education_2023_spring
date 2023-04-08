@@ -24,3 +24,33 @@ class TestFile(unittest.TestCase):
         expect = []
         var = fn(self.file_name, words)
         self.assertEqual(list(var), expect)
+     
+        def test_file_with_file_object_1(self):
+        words = {'ImPlIcIt', 'compLEX'}
+        expect = ['Explicit is better than implicit',
+                  'Simple is better than complex']
+        with open(self.file_name) as file_object:
+            var = fn(file_object, words)
+            self.assertEqual(list(var), expect)
+
+    def test_file_with_file_object_2(self):
+        words = {}
+        expect = []
+        with open(self.file_name) as file_object:
+            var = fn(file_object, words)
+            self.assertEqual(list(var), expect)
+
+    def test_file_with_file_object_3(self):
+        words = {'develop'}
+        expect = []
+        with open(self.file_name) as file_object:
+            var = fn(file_object, words)
+            self.assertEqual(list(var), expect)
+
+    def test_file_with_file_object_4(self):
+        ''' Должно быть полное совпадение, а не только лишь часть слова'''
+        words = {'ImpLic'}
+        expect = []
+        with open(self.file_name) as file_object:
+            var = fn(file_object, words)
+            self.assertEqual(list(var), expect)
