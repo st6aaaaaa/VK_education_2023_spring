@@ -136,3 +136,4 @@ class TestIffi(unittest.TestCase):
                               mock.call("setter"),
                               ]
             self.assertEqual(expected_calls, mk_var.mock_calls)
+            
