@@ -25,7 +25,7 @@ class TestFile(unittest.TestCase):
         var = fn(self.file_name, words)
         self.assertEqual(list(var), expect)
      
-        def test_file_with_file_object_1(self):
+    def test_file_with_file_object_1(self):
         words = {'ImPlIcIt', 'compLEX'}
         expect = ['Explicit is better than implicit',
                   'Simple is better than complex']
