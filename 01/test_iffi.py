@@ -104,4 +104,3 @@ class TestIffi(unittest.TestCase):
                                           0.7, 0.9),
                 'норм')
             
-            
