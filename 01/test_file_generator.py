@@ -54,3 +54,4 @@ class TestFile(unittest.TestCase):
             self.assertEqual(type(file_object), _io.TextIOWrapper)
             var = fn(file_object, words)
             self.assertEqual(list(var), expect)
+            
