@@ -20,3 +20,4 @@ def parse_json(json_str, keyword_callback=None,
                 for word in keywords:
                     if word in json_dict[field].split():
                         keyword_callback(field, word)
+                        
