@@ -1,5 +1,5 @@
-"""Модуль тестирует функцию function из модуля file_generator"""
 import unittest
+import _io
 from file_generator import function as fn
 
 
@@ -10,26 +10,26 @@ class TestFile(unittest.TestCase):
         self.file_name = "./text"
 
     def test_file(self):
-        "Проверяю, имеются ли строки с данными словами"
         words = {'ImPlIcIt', 'compLEX'}
         expect = ['Explicit is better than implicit',
                   'Simple is better than complex']
+        self.assertEqual(type(self.file_name), str)
         var = fn(self.file_name, words)
         self.assertEqual(list(var), expect)
 
     def test_file_without_array_of_words(self):
-        """Проверяю, что функуия не сгенерирует строки, если в
-        функцию будет передан пустой массив желаемых слов"""
         words = {}
         expect = []
+        self.assertEqual(type(self.file_name), str)
         var = fn(self.file_name, words)
         self.assertEqual(list(var), expect)
-     
+
     def test_file_with_file_object_1(self):
         words = {'ImPlIcIt', 'compLEX'}
         expect = ['Explicit is better than implicit',
                   'Simple is better than complex']
         with open(self.file_name) as file_object:
+            self.assertEqual(type(file_object), _io.TextIOWrapper)
             var = fn(file_object, words)
             self.assertEqual(list(var), expect)
 
@@ -37,6 +37,7 @@ class TestFile(unittest.TestCase):
         words = {}
         expect = []
         with open(self.file_name) as file_object:
+            self.assertEqual(type(file_object), _io.TextIOWrapper)
             var = fn(file_object, words)
             self.assertEqual(list(var), expect)
 
@@ -44,6 +45,7 @@ class TestFile(unittest.TestCase):
         words = {'develop'}
         expect = []
         with open(self.file_name) as file_object:
+            self.assertEqual(type(file_object), _io.TextIOWrapper)
             var = fn(file_object, words)
             self.assertEqual(list(var), expect)
 
@@ -52,5 +54,6 @@ class TestFile(unittest.TestCase):
         words = {'ImpLic'}
         expect = []
         with open(self.file_name) as file_object:
+            self.assertEqual(type(file_object), _io.TextIOWrapper)
             var = fn(file_object, words)
             self.assertEqual(list(var), expect)
