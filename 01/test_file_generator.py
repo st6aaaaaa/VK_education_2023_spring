@@ -5,8 +5,6 @@ from file_generator import function as fn
 
 class TestFile(unittest.TestCase):
     def setUp(self) -> None:
-        """устанавливаю имя файла одно и то же для всех тестов.
-        В файле укороченный дзен пайтона"""
         self.file_name = "./text"
 
     def test_file(self):
@@ -50,7 +48,6 @@ class TestFile(unittest.TestCase):
             self.assertEqual(list(var), expect)
 
     def test_file_with_file_object_4(self):
-        ''' Должно быть полное совпадение, а не только лишь часть слова'''
         words = {'ImpLic'}
         expect = []
         with open(self.file_name) as file_object:
