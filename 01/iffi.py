@@ -14,3 +14,4 @@ def predict_message_mood(message: str, model: SomeModel,
     if tmp > good_thresholds:
         return 'отл'
     return 'норм'
+
