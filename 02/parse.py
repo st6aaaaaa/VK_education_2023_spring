@@ -1,4 +1,4 @@
-mport json
+import json
 
 
 def handler(field, word):
