@@ -50,3 +50,4 @@ class Data:
     num = Integer()
     name = String()
     price = PositiveInteger()
+    
