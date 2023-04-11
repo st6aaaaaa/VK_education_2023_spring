@@ -3,8 +3,9 @@ import re
 
 def func(value, type_var):
     if not isinstance(value, type_var):
+        type_of_var = re.findall(r" '([_.a-z]+)'", str(type_var))[0]
         var = re.findall(r" '([_.a-z]+)'", str(type(value)))[0]
-        tmp = "должно быть целым, а не {}".format(var)
+        tmp = "должно быть {}, а не {}".format(type_var, var)
         raise TypeError(tmp)
 
 
