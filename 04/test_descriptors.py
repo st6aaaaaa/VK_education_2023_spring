@@ -46,3 +46,4 @@ class TestDescriptor(unittest.TestCase):
             var.name = temp
             self.assertEqual(var.name, temp)
             self.assertIsInstance(var.name, str)
+            
