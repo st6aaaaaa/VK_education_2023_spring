@@ -44,3 +44,4 @@ class CustomClass(metaclass=CustomMeta):
 
     def __repr__(self):
         return 'testing __repr__ of CustomClass'
+    
