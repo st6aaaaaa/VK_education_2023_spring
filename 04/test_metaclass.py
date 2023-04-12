@@ -45,3 +45,4 @@ class TestMetaClass(unittest.TestCase):
         with self.assertRaises(AttributeError):
             self.assertEqual(self.class_var.line(), 100)
             self.assertEqual(metaclass.CustomClass.x, 50)
+            
