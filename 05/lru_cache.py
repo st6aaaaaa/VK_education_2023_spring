@@ -30,4 +30,3 @@ class LRUCache:
             self.deq.append([key, value])
             self.diction[key] = value
             
-
