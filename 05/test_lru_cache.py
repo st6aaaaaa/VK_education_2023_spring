@@ -32,3 +32,4 @@ class TestLRU(unittest.TestCase):
         cache.set("k_1", "val_1")
         self.assertEqual(cache.get("k_1"), "val_1")
         self.assertEqual(cache.get("k_4"), None)
+        
