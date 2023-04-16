@@ -8,9 +8,12 @@ class TestDescriptor(unittest.TestCase):
 
         arr1 = [1.1, {1, 2, 3, 4}, {'se': 1}, (1, 2), 'type']
         var = Data()
-        with self.assertRaises(TypeError):
-            for temp in arr1:
+        var.num = -12
+
+        for temp in arr1:
+            with self.assertRaises(TypeError):
                 var.num = temp
+            self.assertEqual(var.num, -12)
 
         arr2 = [-11, 0, 2, 3, -4]
         for temp in arr2:
@@ -22,9 +25,12 @@ class TestDescriptor(unittest.TestCase):
 
         arr1 = [1.1, {1, 2, 3, 4}, {'se': 1}, (1, 2), 'type']
         var = Data()
-        with self.assertRaises(TypeError):
-            for temp in arr1:
+        var.price = 12
+
+        for temp in arr1:
+            with self.assertRaises(TypeError):
                 var.price = temp
+            self.assertEqual(var.price, 12)
 
         arr2 = [1, 2, 3, 4]
         for temp in arr2:
@@ -37,13 +43,15 @@ class TestDescriptor(unittest.TestCase):
 
         arr1 = [1.1, {1, 2, 3, 4}, {'se': 1}, (1, 2), 1]
         var = Data()
-        with self.assertRaises(TypeError):
-            for temp in arr1:
+        var.name = "name"
+
+        for temp in arr1:
+            with self.assertRaises(TypeError):
                 var.name = temp
+            self.assertEqual(var.name, 'name')
 
         arr2 = ['aa', 'qwe', '']
         for temp in arr2:
             var.name = temp
             self.assertEqual(var.name, temp)
             self.assertIsInstance(var.name, str)
-            
