@@ -49,4 +49,3 @@ class TestMetaClass(unittest.TestCase):
         self.assertEqual(self.class_var.__dict__['_custom_v1'], 12)
         self.assertEqual(metaclass.CustomClass.__dict__['custom_x'], 50)
         
-        
