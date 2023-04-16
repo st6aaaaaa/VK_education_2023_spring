@@ -113,4 +113,3 @@ class TestCustomList(unittest.TestCase):
         self.assertTrue(CustomList([1, 2, 3]).__ne__([1, -7, 4]))
         self.assertTrue(CustomList([1]).__ne__([-1]))
         
-        
