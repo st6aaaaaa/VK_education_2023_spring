@@ -15,7 +15,6 @@ class TestMetaClass(unittest.TestCase):
         self.class_var._v1 = 12
 
     def test_class(self):
-
         self.assertFalse(hasattr(self.class_var, '_protect'))
         self.assertFalse(hasattr(self.class_var, '__private'))
         self.assertFalse(hasattr(self.class_var, 'val'))
@@ -34,18 +33,29 @@ class TestMetaClass(unittest.TestCase):
         self.assertTrue(hasattr(metaclass.CustomClass, 'custom_x'))
         self.assertTrue(hasattr(metaclass.CustomClass, 'custom_line'))
 
-        self.assertEqual(self.class_var.__dict__['_custom_protect'], 1)
-        self.assertEqual(self.class_var.__dict__['__custom_private'], 2)
-        self.assertEqual(self.class_var.__dict__['custom_val'], 99)
-        self.assertEqual(self.class_var.__dict__['custom_var'], 12)
-        self.assertEqual(self.class_var.__dict__['custom_function1'](2), 4)
-        self.assertEqual(str(self.class_var), "Custom_by_metaclass")
-        self.assertEqual(
-            repr(self.class_var),
-            "testing __repr__ of CustomClass")
-        self.assertEqual(
-            self.class_var.__dict__['custom_function2']('aaa'),
-            'AAA')
-        self.assertEqual(self.class_var.__dict__['_custom_v1'], 12)
-        self.assertEqual(metaclass.CustomClass.__dict__['custom_x'], 50)
-        
+        self.assertTrue(getattr(self.class_var, '_custom_protect'), 1)
+        self.assertTrue(getattr(self.class_var, '__custom_private'), 2)
+        self.assertTrue(getattr(self.class_var, 'custom_val'), 99)
+        self.assertTrue(getattr(self.class_var, 'custom_var'), 12)
+        self.assertTrue(getattr(self.class_var, 'custom_function1')(2), 4)
+        self.assertTrue(getattr(self.class_var, '__str__')(), "Custom_by_metaclass")
+
+        self.assertEqual(repr(self.class_var), "testing __repr__ of CustomClass")
+        self.assertTrue(getattr(self.class_var, 'custom_function2')('aaa'), 'AAA')
+
+        self.assertTrue(getattr(self.class_var, '_custom_v1'), 12)
+        self.assertTrue(getattr(metaclass.CustomClass, 'custom_x'), 50)
+
+        self.assertTrue(hasattr(metaclass.CustomClass, 'custom_x'))
+        self.assertTrue(hasattr(metaclass.CustomClass, '__custom_hello'))
+        self.assertTrue(hasattr(metaclass.CustomClass, '_custom_var'))
+        self.assertTrue(hasattr(metaclass.CustomClass, 'custom_line'))
+
+        self.assertFalse(hasattr(metaclass.CustomClass, 'x'))
+        self.assertFalse(hasattr(metaclass.CustomClass, '__hello'))
+        self.assertFalse(hasattr(metaclass.CustomClass, '_var'))
+        self.assertFalse(hasattr(metaclass.CustomClass, 'line'))
+
+        for i, j in zip(['x', '_var', '__hello'], [50, 12, 13]):
+            with self.assertRaises(AttributeError):
+                self.assertEqual(getattr(metaclass.CustomClass, i), j)
