@@ -59,3 +59,4 @@ class TestMetaClass(unittest.TestCase):
         for i, j in zip(['x', '_var', '__hello'], [50, 12, 13]):
             with self.assertRaises(AttributeError):
                 self.assertEqual(getattr(metaclass.CustomClass, i), j)
+                
