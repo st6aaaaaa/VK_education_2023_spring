@@ -30,6 +30,8 @@ class CustomMeta(type):
 
 class CustomClass(metaclass=CustomMeta):
     x = 50
+    _var = 12
+    __hello = 13
 
     def __init__(self, protect=1, private=2, val=99):
         self.val = val
