@@ -38,10 +38,13 @@ class TestMetaClass(unittest.TestCase):
         self.assertTrue(getattr(self.class_var, 'custom_val'), 99)
         self.assertTrue(getattr(self.class_var, 'custom_var'), 12)
         self.assertTrue(getattr(self.class_var, 'custom_function1')(2), 4)
-        self.assertTrue(getattr(self.class_var, '__str__')(), "Custom_by_metaclass")
+        self.assertTrue(getattr(self.class_var, '__str__')(),
+                        "Custom_by_metaclass")
 
-        self.assertEqual(repr(self.class_var), "testing __repr__ of CustomClass")
-        self.assertTrue(getattr(self.class_var, 'custom_function2')('aaa'), 'AAA')
+        self.assertEqual(repr(self.class_var),
+                         "testing __repr__ of CustomClass")
+        self.assertTrue(getattr(self.class_var, 'custom_function2')('aaa'),
+                        'AAA')
 
         self.assertTrue(getattr(self.class_var, '_custom_v1'), 12)
         self.assertTrue(getattr(metaclass.CustomClass, 'custom_x'), 50)
