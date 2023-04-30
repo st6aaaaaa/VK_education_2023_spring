@@ -59,3 +59,4 @@ for i in range(N):
     tmp3[i].weight += i
 endTime = time.time()
 print('time of change of class with "weakref" = ', endTime - startTime)
+
