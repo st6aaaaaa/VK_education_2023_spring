@@ -8,6 +8,74 @@ class CustomFilter(logging.Filter):
         return len(record.msg.split()) % 2 == 1
 
 
+log_config = {
+            "version": 1,
+            "handlers": {
+                    "file": {
+                             "filename": "cache.log",
+                             "level": "DEBUG",
+                             "class": "logging.FileHandler",
+                             "formatter": "out"},
+
+                    "console": {
+                            "class": "logging.StreamHandler",
+                            "level": "DEBUG",
+                            "formatter": "output_console"},
+
+                    "onlyfilter": {
+                            "filename": "cache.log",
+                            "level": "DEBUG",
+                            "class": "logging.FileHandler",
+                            "formatter": "out",
+                            "filters": ["filter"]},
+
+                    "consolewithfilter": {
+                            "level": "DEBUG",
+                            "class": "logging.StreamHandler",
+                            "formatter": "output_console",
+                            "filters": ["filter"]},
+                },
+
+            "formatters": {
+                        "out": {
+                                "format": "%(levelname)s %(message)s"
+                            },
+                        "output_console": {
+                                "format": "%(levelname)s Good evening - "
+                                          "console  %(message)s"
+                            }
+                        },
+
+            "loggers": {
+                        "logfile": {
+                                "handlers": ["file"],
+                                "level": "DEBUG"
+                            },
+                        "logconsole": {
+                                "handlers": ["console", "file"],
+                                "level": "DEBUG"
+                            },
+                        "logfilter": {
+                                "handlers": ["onlyfilter"],
+                                "level": "DEBUG"
+                            },
+                        "logconsoleandfilter": {
+                                "handlers": ["consolewithfilter",
+                                             "onlyfilter"],
+                                "level": "DEBUG"
+                            }
+                    },
+
+            "filters": {
+                    "filter": {
+                            "()": CustomFilter
+                        }
+                }
+        }
+
+logging.config.dictConfig(log_config)
+
+
 class Node:
     def __init__(self, key, val):
         self.key = key
@@ -19,79 +87,6 @@ class Node:
 class LRUCache:
 
     def __init__(self, console, filtset, limit=4):
-        log_config = {
-            "version": 1,
-            "handlers":
-                {
-                    "file":
-                        {"filename": "cache.log",
-                         "level": "DEBUG",
-                         "class": "logging.FileHandler",
-                         "formatter": "out"},
-
-                    "console":
-                        {
-                            "class": "logging.StreamHandler",
-                            "level": "DEBUG",
-                            "formatter": "out"},
-
-                    "onlyfilter":
-                        {
-                            "filename": "cache.log",
-                            "level": "DEBUG",
-                            "class": "logging.FileHandler",
-                            "formatter": "out",
-                            "filters": ["filter"]},
-
-                    "consolewithfilter":
-                        {
-                            "level": "DEBUG",
-                            "class": "logging.StreamHandler",
-                            "formatter": "out",
-                            "filters": ["filter"]},
-                },
-
-            "formatters":
-                {
-                    "out":
-                        {
-                            "format": "%(levelname)s %(message)s"
-                        }
-                },
-
-            "loggers":
-                {
-                    "logfile":
-                        {
-                            "handlers": ["file"],
-                            "level": "DEBUG"
-                        },
-                    "logconsole":
-                        {
-                            "handlers": ["console", "file"],
-                            "level": "DEBUG"
-                        },
-                    "logfilter":
-                        {
-                            "handlers": ["onlyfilter"],
-                            "level": "DEBUG"
-                        },
-                    "logconsoleandfilter":
-                        {
-                            "handlers": ["consolewithfilter", "onlyfilter"],
-                            "level": "DEBUG"
-                        }
-                },
-
-            "filters": {
-                    "filter": {
-                            "()": CustomFilter
-                        }
-                }
-        }
-
-        logging.config.dictConfig(log_config)
-
         if console and filtset:
             self.logger = logging.getLogger("logconsoleandfilter")
         elif console and not filtset:
