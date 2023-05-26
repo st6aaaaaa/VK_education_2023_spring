@@ -54,4 +54,14 @@ class TestLRU(unittest.TestCase):
 
         cache.set("k_4", "val_4")
         self.assertEqual(cache.get("k_1"), None)
+
+    def test_lru_5(self):
+        cache = LRUCache(2)
+
+        cache.set("k_1", "val_1")
+        cache.set("k_2", "val_2")
+        cache.set("k_1", "val_1.1")
+        cache.set("k_3", "val_3")
+
+        self.assertEqual(cache.get("k_2"), None)
          
