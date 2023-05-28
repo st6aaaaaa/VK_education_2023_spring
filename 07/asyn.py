@@ -1,35 +1,56 @@
-import sys
 import asyncio
+import argparse
+import re
+from collections import Counter
 import aiohttp
+from bs4 import BeautifulSoup as BSoup
 
 
-COUNT = 0
-
-
-async def fetch_url(url, semaphore):
+async def fetch_url(que):
     async with aiohttp.ClientSession() as session:
-        async with semaphore:
+        while True:
+            url = await que.get()
             async with session.get(url) as resp:
                 if resp.status == 200:
-                    global COUNT
-                    COUNT += 1
+                    tmp1 = await resp.text()
+                    tmp2 = BSoup(tmp1, 'html.parser').text
+                    tmp3 = re.findall(r'[a-z]+', tmp2, re.IGNORECASE)
+                    tmp4 = dict(Counter(tmp3).most_common(5))
+                    print(tmp4)
+                    que.task_done()
 
 
-async def function(numbers, files):
-    urls = []
-    with open(files, "r") as file:
-        for line in file:
-            urls.append(line.rstrip())
-
-    num = asyncio.Semaphore(numbers)
-    tasks = [asyncio.create_task(fetch_url(url, num)) for url in urls]
-    await asyncio.gather(*tasks)
+async def produce(tmp1, tmp2):
+    for line in tmp1:
+        await tmp2.put(line.rstrip())
 
 
-def main():
-    cli = sys.argv[1:]
-    asyncio.run(function(int(cli[-2]), cli[-1]))
+async def function(files, numbers):
+    deq = asyncio.Queue()
+
+    with open(files, 'r') as file_pointer:
+        task_queue = asyncio.create_task(produce(file_pointer, deq))
+        tasks = [asyncio.create_task(fetch_url(deq)) for i in range(numbers)]
+
+        await task_queue
+        await deq.join()
 
 
-main()
+def main(tmp, cnt):
+    asyncio.run(function(tmp, cnt))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-c",
+                        help="count of simultaneous requests with option -c",
+                        type=int)
+    parser.add_argument("C", nargs='*', help="count of simultaneous requests",
+                        type=int)
+    parser.add_argument("file", help="name of file", type=str)
+    temp = parser.parse_args()
+
+    temp2 = temp.c if temp.c else temp.C[0]
+    main(temp.file, temp2)
  
